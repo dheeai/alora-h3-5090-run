@@ -1,0 +1,8 @@
+huggingface_hub>=1.31.0
+imageio_ffmpeg>=0.6.0
+numpy>=2.5.3
+av>=18.1.0
+# Trainer: install AI Toolkit at pinned revision instead of from PyPI:
+#   git clone https://github.com/ostris/ai-toolkit && cd ai-toolkit
+#   git checkout f56b5a1d405f819c74724228564e99982624c186
+#   <use its manager/env spec for torch etc. — do not mix with this file's pins>

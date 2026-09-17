@@ -1,0 +1,12 @@
+{
+  "machine": { "gpu": "", "vram_gb": 32, "system_ram_gb": 64, "os": "", "driver": "", "torch": "", "ai_toolkit_rev": "f56b5a1d405f819c74724228564e99982624c186" },
+  "dataset": { "clips_checked": 0, "frames_ok": 0, "captions_ok": 0, "audio_mask_nonzero": null, "preflight_passed": false },
+  "stages": {
+    "39":  { "steps": 0, "warmup_s_per_step": null, "steady_s_per_step": null, "peak_vram_mib": null, "peak_ram_mib": null, "cache_time_s": null, "sample_time_s": null, "notes": "" },
+    "73":  { "steps": 0, "warmup_s_per_step": null, "steady_s_per_step": null, "peak_vram_mib": null, "peak_ram_mib": null, "cache_time_s": null, "sample_time_s": null, "notes": "" },
+    "107": { "steps": 0, "warmup_s_per_step": null, "steady_s_per_step": null, "peak_vram_mib": null, "peak_ram_mib": null, "cache_time_s": null, "sample_time_s": null, "checkpoint_reload_ok": null, "validation_ok": null, "notes": "" }
+  },
+  "audio": { "enabled": true, "audio_loss_nonzero": null },
+  "incidents": [],
+  "pass_fail": { "all_criteria_met": null, "go_no_go": "", "rationale": "" }
+}

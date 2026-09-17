@@ -1,0 +1,38 @@
+{
+  "_comment": "TEMPLATE ONLY — key names must be verified against AI Toolkit's config schema at pinned revision f56b5a1d405f819c74724228564e99982624c186 before use. For the 39/73-frame stages, copy this file and change only frames + dataset path.",
+  "model": {
+    "family": "minimax_h3",
+    "flavour": "convrot-int8",
+    "partition": "default FL2VA pruned",
+    "text_encoder_quant": "nvfp4"
+  },
+  "adapter": { "type": "lora", "rank": 16, "exclude_modules": ["adaln_proj"] },
+  "training": {
+    "batch_size": 1,
+    "gradient_accumulation": 1,
+    "gradient_checkpointing": true,
+    "learning_rate": 6e-5,
+    "max_train_steps": 100,
+    "mixed_precision": "bf16",
+    "resolution_bucket": 512,
+    "frames": 107,
+    "do_audio": true,
+    "audio_loss_multiplier": 1.0,
+    "distillation": "keep AI Toolkit defaults (training adapter + contrastive guidance)",
+    "memory": { "low_vram_mode": true, "disk_caches": true, "layer_offloading": true }
+  },
+  "data": {
+    "dataset_dir": "data/benchmark-107",
+    "captions": "sidecar .txt per clip",
+    "audio": "embedded in MP4 (loader reads it from the video)",
+    "automatic_frame_counts": false,
+    "whole_video_shrinking": false
+  },
+  "validation": { "generate_sample": true, "small_preview_only": true },
+  "checkpoint": { "save": true, "reload_test": true },
+  "hard_requirements": [
+    "nonzero audio loss mask on every sample",
+    "no OOM / no sustained swapping",
+    "checkpoint reload verified"
+  ]
+}

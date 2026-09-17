@@ -1,0 +1,28 @@
+{
+  "dataset": "aaron1z/alora-kannada-fleurs-v1 (private; HF_TOKEN required)",
+  "layout": {
+    "clip": "<collection>/<id>.mp4 with synced AAC audio embedded (loader reads audio from the video)",
+    "caption": "<collection>/<id>.txt next to each clip",
+    "archival_audio": "<collection>/<id>.wav PCM16 mono 48 kHz",
+    "splits": "train.jsonl / val.jsonl / test.jsonl (fields: id, collection, video_file, audio_file, caption, source_id)"
+  },
+  "media": {
+    "frames": 124,
+    "fps": 24,
+    "duration_seconds": 5.1667,
+    "h3_frame_grid": "17n+5 (39, 73, 107, 124)",
+    "video": "H.264 CRF20, height capped at 720, no upscaling",
+    "audio": "mono, 48 kHz delivered (loader resamples; mono duplication to stereo is permitted, keep provenance)"
+  },
+  "splits": { "train": 900, "val": 50, "test": 50, "grouping": "all clips from one source_id stay in one split" },
+  "benchmark": {
+    "frames": 107,
+    "clip_count": "20-50 reviewed clips via dataset/make_107_crops.py",
+    "audio": "must be enabled; nonzero audio loss mask required"
+  },
+  "flags": {
+    "generation_training_ready": false,
+    "caption_method": "faster-whisper large-v3-turbo, Kannada forced; automatic, not human verified",
+    "review_status": "automated only; human review pending"
+  }
+}
