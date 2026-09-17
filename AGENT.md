@@ -76,9 +76,26 @@ fails, or adapter reload fails. Do not paper over these.
 
 ## 6. After the benchmark
 
-- Pass → propose the capped pilot (max 2000 steps, save every 100, review samples every 250).
+- Pass → run the Phase 2 capped pilot below. Only run it on an explicit **pass**.
 - Fail → report which resource bound it, and what to change first (spatial resolution, then caching/offload).
 - Deliver: RESULTS.json, config used, monitor CSVs, raw logs, and a one-paragraph go/no-go.
+
+## 7. Phase 2 — capped pilot on the full 1000 clips
+
+Run **only after** the 107-frame benchmark passes. No separate download needed — train on
+`data/alora-kannada-fleurs-v1/` using `train.jsonl` (900 clips), validate on `val.jsonl` (50),
+and keep `test.jsonl` (50) **completely untouched** until checkpoints are chosen.
+
+- Same settings as the benchmark, except `frames: 124` (the clips' native grid) and
+  `max_train_steps: 2000`.
+- Save a checkpoint **every 100 steps**; generate and review samples **every 250 steps**.
+- At ~900 training clips and batch size 1, 2000 steps ≈ 2.2 passes. This is a budget, not a convergence guarantee.
+- Compare checkpoints against each other and the base model on `dataset/eval_prompts.kn.txt`
+  (50 held-out Kannada prompts, 2 seeds each): exact dialogue, intelligibility, pronunciation,
+  lip sync, visual quality, unwanted repetition. Pick the best checkpoint — never assume the last one is best.
+- Then test the chosen adapter in the intended H3 inference runtime before calling it done.
+
+Do not exceed 2000 steps, do not touch the test split early, and do not start this phase on a failed benchmark.
 
 ## Do-not list
 
@@ -101,3 +118,4 @@ fails, or adapter reload fails. Do not paper over these.
 | `scripts/monitor.py` | VRAM/RAM sampler |
 | `configs/` | AI Toolkit job templates + inspected SimpleTuner 32 GB preset (alternate path) |
 | `docs/` | full benchmark instructions, SimpleTuner H3 guide, license notes |
+
