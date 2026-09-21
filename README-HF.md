@@ -94,7 +94,8 @@ lists `train.jsonl`, `val.jsonl`, `test.jsonl` with fields
 
 Record fields include fps/frames/resolution, caption, transcript, category, source
 title/URL/creator, license, leakage group, split, and SHA-256 hashes. Keep `test.jsonl`
-untouched until checkpoints are chosen.
+untouched until checkpoints are chosen. The root also carries `checksums.json` (SHA-256 for
+every file in the repo) and `exclusions.jsonl` (every removed clip with its reason and stage).
 
 ## Usage
 

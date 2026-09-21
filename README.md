@@ -92,7 +92,9 @@ not silently discarded.
 > clips** — every `<id>.mp4` / `<id>.wav` / `<id>.txt` is referenced by `metadata.jsonl` and a
 > split list. The Hugging Face repo additionally hosts a separate **legacy 114-pair Kannada
 > ASR seed** (`train`/`validation`/`test-*.parquet`, `statistics.json`, `manifest.json`,
-> `sources.json`) that is unrelated to the video dataset.
+> `sources.json`) that is unrelated to the video dataset. The root also carries
+> `checksums.json` (SHA-256 for every file) and `exclusions.jsonl` (every removed clip with
+> its reason and stage). Release tagged **`v839-2026-09-21`** on GitHub and Hugging Face.
 
 **What automated checks do *not* prove**
 - Captions are approximate machine output, not verified dialogue.
