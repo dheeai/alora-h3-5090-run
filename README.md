@@ -78,7 +78,7 @@ reproducible from the `work/` pipeline, and every record keeps
 | Stage | Clips | Notes |
 |---|---:|---|
 | Documented total across collections | **1000** | aggregate before quality filtering |
-| − Earlier exclusion pass (`exclusions-v2.jsonl`) | **−169** | bad/missing Kannada script (82), unresolved multi-flag (73), unverified language (12), empty caption (2) |
+| − Earlier exclusion pass | **−169** | bad/missing Kannada script (82), unresolved multi-flag (73), unverified language (12), empty caption (2) |
 | = Curated baseline | **831** | |
 | + `video-5s-v11` appended | **+287** | 316 built, 29 dropped as confidently non-Kannada |
 | − v11 audit filter | **−279** | language-uncertain 137, boundary **and** sync flagged 268, no Kannada script 59 (union) |
@@ -88,12 +88,11 @@ The v11 yield was intentionally strict: only clips that passed **all** language,
 sync and script gates were kept. Failed clips and their reasons are recorded per collection,
 not silently discarded.
 
-> Note on repo contents: the Hugging Face repo also retains a **legacy 207-clip generation
-> source-pool** package (`alora-generation-catalog.jsonl`, `video-quality-report.json`,
-> `checksums.json`) plus a separate **114-pair ASR seed** (Parquet `.parquet` + `statistics.json`).
-> Media for the legacy pool shares the same collection directories but is **not** part of
-> `metadata.jsonl` or the split lists — the current video dataset is defined solely by
-> `metadata.jsonl` (**839** clips).
+> Note on repo contents: the collection directories now contain **exactly the 839 indexed
+> clips** — every `<id>.mp4` / `<id>.wav` / `<id>.txt` is referenced by `metadata.jsonl` and a
+> split list. The Hugging Face repo additionally hosts a separate **legacy 114-pair Kannada
+> ASR seed** (`train`/`validation`/`test-*.parquet`, `statistics.json`, `manifest.json`,
+> `sources.json`) that is unrelated to the video dataset.
 
 **What automated checks do *not* prove**
 - Captions are approximate machine output, not verified dialogue.
