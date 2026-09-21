@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use the Alora Kannada video dataset or this run-kit, please cite it as below."
+title: "Alora Kannada Video Dataset and MiniMax H3 RTX 5090 run-kit"
+type: dataset
+authors:
+  - name: "Dhee AI"
+    website: "https://github.com/dheeai"
+version: "839-clip"
+date-released: "2026-09-21"
+license: CC-BY-4.0
+abstract: >-
+  A curated collection of 839 short Kannada video clips (124 frames, 24 fps, 5.1667 s)
+  with synced PCM16 mono 48 kHz audio and machine-generated Kannada captions, built for
+  audiovisual generative-model training and benchmarking. Sources are CC-BY YouTube and
+  Wikimedia Commons recordings. Captions, language identification, lip-sync and utterance
+  boundaries are automated screening results, not human verification.
+keywords:
+  - Kannada
+  - video dataset
+  - audiovisual
+  - MiniMax H3
+  - LoRA
+  - text-to-video
+repository-artifact: "https://huggingface.co/datasets/aaron1z/alora-kannada-fleurs-v1"
+repository-code: "https://github.com/dheeai/alora-h3-5090-run"

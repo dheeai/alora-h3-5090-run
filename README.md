@@ -88,8 +88,12 @@ The v11 yield was intentionally strict: only clips that passed **all** language,
 sync and script gates were kept. Failed clips and their reasons are recorded per collection,
 not silently discarded.
 
-> Note: excluded clips may still have media present in their collection directory, but they
-> are absent from `metadata.jsonl` and from the split lists — treat those files as unindexed.
+> Note on repo contents: the Hugging Face repo also retains a **legacy 207-clip generation
+> source-pool** package (`alora-generation-catalog.jsonl`, `video-quality-report.json`,
+> `checksums.json`) plus a separate **114-pair ASR seed** (Parquet `.parquet` + `statistics.json`).
+> Media for the legacy pool shares the same collection directories but is **not** part of
+> `metadata.jsonl` or the split lists — the current video dataset is defined solely by
+> `metadata.jsonl` (**839** clips).
 
 **What automated checks do *not* prove**
 - Captions are approximate machine output, not verified dialogue.
@@ -155,6 +159,8 @@ untouched until checkpoints are chosen. Full instructions and thresholds are in
 | `scripts/monitor.py` | VRAM / RAM sampler |
 | `configs/` | AI Toolkit job templates + SimpleTuner 32 GB preset (alternate path) |
 | `docs/` | full benchmark instructions, SimpleTuner H3 guide, license notes |
+| `LICENSE` | MIT for this run-kit code (dataset media is **not** covered) |
+| `CITATION.cff` | citation metadata for the dataset / run-kit |
 
 Data, checkpoints and run outputs are gitignored.
 

@@ -135,6 +135,18 @@ windows, re-encoded, and audio-resampled. Retain source credits and license link
 no endorsement is implied. Evaluation expansions used speech-coverage and scene-cut
 filters; see per-collection validation reports where present.
 
+## Citation
+
+```bibtex
+@dataset{alora_kannada_video_2026,
+  title  = {Alora Kannada Video Dataset and MiniMax H3 RTX 5090 run-kit},
+  author = {Dhee AI},
+  year   = {2026},
+  note   = {839 five-second Kannada clips, 124 frames at 24 fps, synced 48 kHz audio},
+  url    = {https://huggingface.co/datasets/aaron1z/alora-kannada-fleurs-v1}
+}
+```
+
 ## Legacy ASR seed
 
 The repository also hosts the original 114-pair Kannada audio/transcript seed
