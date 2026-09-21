@@ -2,6 +2,7 @@
 
 Requires: export HF_TOKEN=<read-scope token with access to aaron1z/alora-kannada-fleurs-v1>
 """
+import json
 import os
 from pathlib import Path
 from huggingface_hub import snapshot_download
@@ -20,7 +21,6 @@ wav = list(Path(path).glob('*/*.wav'))
 txt = list(Path(path).glob('*/*.txt'))
 print('clips', len(mp4), 'wavs', len(wav), 'captions', len(txt))
 
-import json
 meta = [json.loads(x) for x in (Path(path) / 'metadata.jsonl').read_text().splitlines()]
 print('metadata rows', len(meta), '| mp4', len(mp4), '| wav', len(wav), '| captions', len(txt))
 missing = [(r['id']) for r in meta
