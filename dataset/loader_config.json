@@ -14,7 +14,8 @@
     "video": "H.264 CRF20, height capped at 720, no upscaling",
     "audio": "mono, 48 kHz delivered (loader resamples; mono duplication to stereo is permitted, keep provenance)"
   },
-  "splits": { "train": 900, "val": 50, "test": 50, "grouping": "all clips from one source_id stay in one split" },
+  "dataset_total_clips": 839,
+  "splits": { "train": 745, "val": 47, "test": 47, "grouping": "all clips from one source_id stay in one split" },
   "benchmark": {
     "frames": 107,
     "clip_count": "20-50 reviewed clips via dataset/make_107_crops.py",

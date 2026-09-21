@@ -44,7 +44,7 @@ Use **20 to 50 reviewed existing clips**. Keep separate unseen clips for evaluat
 
 - Provide MP4 files that **contain the synchronized audio track** plus matching **caption text files**. A separate WAV may remain archival, but the inspected loader extracts audio **from the video** — a silent MP4 with a side WAV does not demonstrate audio training.
 - H3 uses **24 fps** and frame counts of **17n + 5**: `39` (1.625 s), `73` (3.042 s), `107` (4.458 s), `124` (5.167 s).
-- The 5-second / 120-frame clips **do not sit on the H3 grid**. Either use a reviewed **107-frame** window that contains the target phrase, or re-extract a genuine **124-frame** segment from the original. Do not slow, stretch, or pad speech to force a duration.
+- The prepared clips are **124 frames (5.167 s)** and sit on the H3 grid. For the benchmark, use a reviewed **107-frame** window that contains the target phrase, or the full **124-frame** clip. Do not slow, stretch, or pad speech to force a duration.
 - For a controlled benchmark: **turn automatic frame counting off** and use **explicit synchronized crops**. **Disable whole-video shrinking** (the loader can otherwise spread frames across the whole source and retime audio; tail-trim preserves real time but still verify).
 - Captions: describe scene/action, include the **exact Kannada dialogue in original script**, plus relevant speaker and sound/music info.
 - Split by source recording and known speaker to reduce leakage. Keep any evaluation clips strictly separate.
