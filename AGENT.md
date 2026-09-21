@@ -8,7 +8,7 @@ run the H3 audiovisual benchmark on this machine, record measurements, and repor
 
 - Hardware: RTX 5090 (32 GB VRAM) + 64 GB system RAM. Native Linux preferred; WSL2 acceptable only
   if its memory allocation is verified.
-- Dataset: **private HF dataset `aaron1z/alora-kannada-fleurs-v1`** (1000 Kannada clips).
+- Dataset: **private HF dataset `aaron1z/alora-kannada-fleurs-v1`** (839 Kannada clips).
   Authenticate with a read-scope HF token: `export HF_TOKEN=...` (ask the owner; the token is NOT in this repo).
 - Trainer: **AI Toolkit, pinned revision `f56b5a1d405f819c74724228564e99982624c186`** (2026-09-10).
   Use that revision's dependency stack; do not copy a CUDA recipe from another trainer.
@@ -21,7 +21,7 @@ run the H3 audiovisual benchmark on this machine, record measurements, and repor
 python dataset/download_dataset.py          # -> ./data/alora-kannada-fleurs-v1/
 ```
 
-What you get (per collection `diverse-5s`, `generation-5s-v2`, `video-5s-v3` … `video-5s-v10`):
+What you get (per collection `diverse-5s`, `generation-5s-v2`, `video-5s-v3` … `video-5s-v11`):
 - `<id>.mp4` — **124 frames, 24 fps, 5.1667 s, H.264, synced AAC audio embedded** (audio track is what the loader reads)
 - `<id>.wav` — PCM16 mono 48 kHz archival copy
 - `<id>.txt` — caption: scene phrase + **exact Kannada dialogue**
@@ -80,16 +80,16 @@ fails, or adapter reload fails. Do not paper over these.
 - Fail → report which resource bound it, and what to change first (spatial resolution, then caching/offload).
 - Deliver: RESULTS.json, config used, monitor CSVs, raw logs, and a one-paragraph go/no-go.
 
-## 7. Phase 2 — capped pilot on the full 1000 clips
+## 7. Phase 2 — capped pilot on the full 839 clips
 
 Run **only after** the 107-frame benchmark passes. No separate download needed — train on
-`data/alora-kannada-fleurs-v1/` using `train.jsonl` (900 clips), validate on `val.jsonl` (50),
-and keep `test.jsonl` (50) **completely untouched** until checkpoints are chosen.
+`data/alora-kannada-fleurs-v1/` using `train.jsonl` (745 clips), validate on `val.jsonl` (47),
+and keep `test.jsonl` (47) **completely untouched** until checkpoints are chosen.
 
 - Same settings as the benchmark, except `frames: 124` (the clips' native grid) and
   `max_train_steps: 2000`.
 - Save a checkpoint **every 100 steps**; generate and review samples **every 250 steps**.
-- At ~900 training clips and batch size 1, 2000 steps ≈ 2.2 passes. This is a budget, not a convergence guarantee.
+- At ~745 training clips and batch size 1, 2000 steps ≈ 2.7 passes. This is a budget, not a convergence guarantee.
 - Compare checkpoints against each other and the base model on `dataset/eval_prompts.kn.txt`
   (50 held-out Kannada prompts, 2 seeds each): exact dialogue, intelligibility, pronunciation,
   lip sync, visual quality, unwanted repetition. Pick the best checkpoint — never assume the last one is best.
@@ -109,7 +109,8 @@ Do not exceed 2000 steps, do not touch the test split early, and do not start th
 
 | Path | Purpose |
 |---|---|
-| `README.md` | human quickstart |
+| `README.md` | human-facing overview |
+| `README-HF.md` | dataset card copy for the Hugging Face repo |
 | `dataset/download_dataset.py` | pull the private dataset from HF |
 | `dataset/make_107_crops.py` | build 39/73/107-frame benchmark crops + captions |
 | `dataset/loader_config.json` | dataset layout spec for the trainer |

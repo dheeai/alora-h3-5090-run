@@ -19,44 +19,71 @@ task_categories:
 - text-to-video
 ---
 
-# Alora Kannada Video Dataset — 1000 Clips
+# Alora Kannada Video Dataset — 839 Clips
 
-A curated collection of **1000 short Kannada video clips with synced audio and captions**,
+A curated collection of **839 short Kannada video clips with synced audio and captions**,
 built for audiovisual generative-model training and benchmarking (MiniMax H3 LoRA).
 
 ## Dataset Summary
 
 | | |
 |---|---|
-| Clips | **1000** (train 900 / val 50 / test 50) |
+| Clips | **839** (train **745** / val **47** / test **47**) |
 | Language | Kannada (`kn`) |
 | Video | **124 frames, 24 fps, 5.1667 s**, H.264 (height ≤ 720, no upscaling) |
 | Audio | Synced AAC embedded + PCM16 mono **48 kHz** WAV (248000 samples) |
 | Captions | Per-clip `.txt`: scene phrase + Kannada dialogue (machine-generated, unverified) |
-| Sources | CC-BY YouTube and Wikimedia Commons recordings across 10 collections |
+| Sources | 497 source recordings across 180 publishers (CC-BY YouTube and Wikimedia Commons) |
 | Splits | Grouped 90/5/5 by source recording — no recording spans two splits |
 
-Every MP4 is verified to decode to exactly 124 frames with embedded audio ≥ 248000 samples;
-every WAV holds exactly 248000 samples. A language-identification gate removed 59
-confidently non-Kannada clips (listed in `dropped-non-kannada.jsonl`).
+Every MP4 is verified to decode to exactly **124 frames @ 24 fps** with embedded audio
+≥ 248000 samples; every WAV holds exactly **248000 samples** mono 48 kHz. Files are
+SHA-256 verified, and the split assignment is grouped by `source_id` to avoid leakage.
 
 ## Collections
 
-| Collection | Clips |
-|---|---:|
-| diverse-5s | 69 |
-| generation-5s-v2 | 58 |
-| video-5s-v3 | 17 |
-| video-5s-v4 | 28 |
-| video-5s-v5 | 35 |
-| video-5s-v6 | 96 |
-| video-5s-v7 | 195 |
-| video-5s-v8 | 190 |
-| video-5s-v9 | 253 |
-| video-5s-v10 | 59 |
+| Collection | Clips | Focus |
+|---|---:|---|
+| diverse-5s | 37 | Wikimedia/Wikipedia voices, music and film excerpts |
+| generation-5s-v2 | 31 | Kundapura comedy, interviews, studio conversation |
+| video-5s-v3 | 5 | early five-second pilot |
+| video-5s-v4 | 17 | regional comedy, short film, documentary |
+| video-5s-v5 | 17 | theatre, Yakshagana, community interviews |
+| video-5s-v6 | 93 | mixed interviews, speeches, news |
+| video-5s-v7 | 179 | broad search expansion |
+| video-5s-v8 | 172 | broad search expansion |
+| video-5s-v9 | 226 | largest expansion batch |
+| video-5s-v10 | 54 | documentary / farming media |
+| video-5s-v11 | 8 | newest batch, strict audit filter |
 
 Sources span movies, songs, folk and Yakshagana performance, interviews, podcasts, TV,
 documentaries, speeches, stand-up, news, kids' storytelling, vlogs, and educational content.
+
+## How it was built and audited
+
+Every clip must pass automated gates before it enters the dataset; every record keeps
+`generation_training_ready = false` until a human signs off.
+
+- **Build** — CC-BY sources only; a window qualifies with ≥ 80 % speech coverage, < 0.1 %
+  clipped samples, reasonable level, and no detected scene cut. Output is normalized to
+  124 frames @ 24 fps (H.264 CRF20, height ≤ 720) with a paired 248000-sample 48 kHz WAV.
+- **Media integrity** — full decode: frame count, sample count, SHA-256 hashes.
+- **Language ID** — SpeechBrain `lang-id-voxlingua107-ecapa`, calibrated on Kannada + English
+  references.
+- **Utterance boundary** — Silero VAD (via faster-whisper) flags speech within 100 ms of a clip edge.
+- **Lip-sync estimate** — SyncNet v2 + S3FD face tracks with a PySceneDetect scene-cut gate.
+- **Captions** — faster-whisper large-v3-turbo, Kannada forced, with a Kannada-script check.
+
+**Selection history**
+
+| Stage | Clips |
+|---|---:|
+| Documented total across collections | 1000 |
+| − earlier exclusion pass (bad/missing script, multi-flag, unverified language, empty caption) | −169 |
+| = curated baseline | 831 |
+| + `video-5s-v11` appended (316 built, 29 non-Kannada dropped) | +287 |
+| − v11 audit filter (language-uncertain, boundary **and** sync flagged, no Kannada script) | −279 |
+| **= final dataset** | **839** |
 
 ## Dataset Structure
 
@@ -94,6 +121,8 @@ ds = load_dataset('aaron1z/alora-kannada-fleurs-v1')  # legacy 114-pair ASR seed
 - `generation_training_ready=false` on every record. Language, active speaker, lip
   synchronization, music/overlap, utterance boundaries, demographics, and generation
   permissions all remain pending human review.
+- Automated language / lip-sync / boundary results are screening estimates, not
+  certification. Short or accented speech and small or profile faces reduce reliability.
 - Source copyright licenses (CC-BY variants, recorded per clip) do **not** by themselves
   grant permission to build identifiable voice or likeness models.
 - No claim of dialect balance or speaker representativeness; child and grandparent
@@ -103,9 +132,8 @@ ds = load_dataset('aaron1z/alora-kannada-fleurs-v1')  # legacy 114-pair ASR seed
 
 Excerpts from CC-BY YouTube and Wikimedia Commons recordings, trimmed to uniform
 windows, re-encoded, and audio-resampled. Retain source credits and license links;
-no endorsement is implied. Evaluation expansions were capped at two clips per recording
-(older collections) with speech-coverage and scene-cut filters; see per-collection
-validation reports where present.
+no endorsement is implied. Evaluation expansions used speech-coverage and scene-cut
+filters; see per-collection validation reports where present.
 
 ## Legacy ASR seed
 

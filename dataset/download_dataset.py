@@ -22,10 +22,19 @@ print('clips', len(mp4), 'wavs', len(wav), 'captions', len(txt))
 
 import json
 meta = [json.loads(x) for x in (Path(path) / 'metadata.jsonl').read_text().splitlines()]
-assert len(meta) == 1000, len(meta)
+print('metadata rows', len(meta), '| mp4', len(mp4), '| wav', len(wav), '| captions', len(txt))
+missing = [(r['id']) for r in meta
+           if not (Path(path) / r['collection'] / r['video_file']).exists()
+           or not (Path(path) / r['collection'] / r['audio_file']).exists()]
+assert not missing, missing[:5]
 assert {r['frames'] for r in meta} == {124}
 assert {r['fps'] for r in meta} == {24}
+splits = {}
 for split in ('train', 'val', 'test'):
     rows = [json.loads(x) for x in (Path(path) / (split + '.jsonl')).read_text().splitlines()]
+    splits[split] = rows
     print(split, len(rows))
+assert sum(len(v) for v in splits.values()) == len(meta), (sum(len(v) for v in splits.values()), len(meta))
+groups = {s: {r['source_id'] for r in rows} for s, rows in splits.items()}
+assert not (groups['train'] & groups['val'] | groups['train'] & groups['test'] | groups['val'] & groups['test'])
 print('OK')
