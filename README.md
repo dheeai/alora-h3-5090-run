@@ -158,6 +158,8 @@ untouched until checkpoints are chosen. Full instructions and thresholds are in
 | `dataset/eval_prompts.kn.txt` | 50 unseen Kannada prompts (from the held-out test split) |
 | `scripts/run_benchmark.sh` | end-to-end orchestration |
 | `scripts/monitor.py` | VRAM / RAM sampler |
+| `scripts/check_repo.py` | static repo checks (run in CI) |
+| `scripts/sync_hf_card.py` | push `README-HF.md` to the HF dataset card |
 | `configs/` | AI Toolkit job templates + SimpleTuner 32 GB preset (alternate path) |
 | `docs/` | full benchmark instructions, SimpleTuner H3 guide, license notes |
 | `LICENSE` | MIT for this run-kit code (dataset media is **not** covered) |

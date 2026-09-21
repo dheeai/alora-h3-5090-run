@@ -1,10 +1,20 @@
 ---
+pretty_name: Alora Kannada Video Dataset
 language:
 - kn
 license:
 - cc-by-3.0
 - cc-by-4.0
 - cc-by-sa-4.0
+size_categories:
+- n<1K
+tags:
+- video
+- kannada
+- audiovisual
+- text-to-video
+- automatic-speech-recognition
+- cc-by
 configs:
 - config_name: default
   data_files:
@@ -96,6 +106,30 @@ Record fields include fps/frames/resolution, caption, transcript, category, sour
 title/URL/creator, license, leakage group, split, and SHA-256 hashes. Keep `test.jsonl`
 untouched until checkpoints are chosen. The root also carries `checksums.json` (SHA-256 for
 every file in the repo) and `exclusions.jsonl` (every removed clip with its reason and stage).
+
+### Record fields (`metadata.jsonl`)
+
+| Field | Description |
+|---|---|
+| `id` | clip id, `<prefix>_<source>_<nnn>` |
+| `collection` | e.g. `video-5s-v11` |
+| `video_file` / `audio_file` | filenames inside the collection directory |
+| `duration_seconds` / `fps` / `frames` | `5.1667` / `24` / `124` |
+| `resolution` | `[width, height]`, height ≤ 720 |
+| `audio_sample_rate` / `audio_channels` / `audio_samples` | `48000` / `1` / `248000` |
+| `language` / `language_verification` | `kn`; machine-checked, human review pending |
+| `caption` / `transcript` | machine Kannada caption and raw transcript |
+| `caption_method` | `faster-whisper large-v3-turbo`, Kannada forced |
+| `kannada_script_ratio` | fraction of characters in the Kannada script |
+| `category` | content category (interview, news, podcast, …) |
+| `source_id` / `source_title` / `source_url` / `creator` | provenance |
+| `license` / `license_url` | CC-BY variant |
+| `leakage_group` / `split` | grouping key (= `source_id`) and `train`/`val`/`test` |
+| `speech_fraction` / `clipped_fraction` / `rms_dbfs` | audio statistics |
+| `machine_audit_flags` | e.g. `language_uncertain`, `low_sync_confidence`, `possible_av_offset` |
+| `machine_language_review` / `machine_lip_sync_review` / `machine_utterance_boundary_review` | per-check details |
+| `video_sha256` / `audio_sha256` | file hashes |
+| `generation_training_ready` | always `false` pending human review |
 
 ## Usage
 

@@ -55,7 +55,7 @@ Adapter training can still drift away from the frozen distilled behavior. The ex
 }
 ```
 
-This runs a no-grad frozen-base reference pass with the adapter disabled and penalizes the adapter when its video/audio prediction moves too far from that reference. Keep it enabled for normal H3 LoRAs. Lower `loss_weight` if the adapter is not learning the concept; raise it if validation starts losing the base model's distilled behavior. For the full explanation, see [MiniMax H3 Drift Distillation](../distillation/MINIMAX_H3_DRIFT.md).
+This runs a no-grad frozen-base reference pass with the adapter disabled and penalizes the adapter when its video/audio prediction moves too far from that reference. Keep it enabled for normal H3 LoRAs. Lower `loss_weight` if the adapter is not learning the concept; raise it if validation starts losing the base model's distilled behavior. For the full explanation, see the upstream MiniMax H3 drift-distillation notes.
 
 Negative prompting is not part of the base H3 contract. SimpleTuner keeps real CFG and negative prompt plumbing available for de-distilled community checkpoints, but `h3_drift` deliberately preserves the original distilled conditional behavior.
 
